@@ -53,14 +53,13 @@ class _AddMoneyState extends State<AddMoney> with TickerProviderStateMixin {
       var balanceData = snapshot.docs[0].data();
       int currentBalance = int.parse(balanceData['cardAmount']);
 
-        String newBalance = (currentBalance + amnt).toString();
+      String newBalance = (currentBalance + amnt).toString();
 
-        await FirebaseFirestore.instance
-            .collection('cards')
-            .doc(snapshot.docs[0].id)
-            .update({'cardAmount': newBalance});
+      await FirebaseFirestore.instance
+          .collection('cards')
+          .doc(snapshot.docs[0].id)
+          .update({'cardAmount': newBalance});
       return true;
-
     } else {
       return false; // No matching card document found.
     }
@@ -565,7 +564,10 @@ class _AddMoneyState extends State<AddMoney> with TickerProviderStateMixin {
                                         );
                                         return;
                                       }
-                                      balanceTransfer(widget.cardType, int.parse(_model.textController1.text));
+                                      balanceTransfer(
+                                          widget.cardType,
+                                          int.parse(
+                                              _model.textController1.text));
 
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
@@ -575,12 +577,13 @@ class _AddMoneyState extends State<AddMoney> with TickerProviderStateMixin {
                                           ),
                                         ),
                                       );
-                                      await Navigator.push(
+                                      Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => NavBarPage(
                                               initialPage: 'MY_Card'),
                                         ),
+                                        (r) => false,
                                       );
                                     },
                                     style: ElevatedButton.styleFrom(
