@@ -143,8 +143,6 @@ class _NavBarPageState extends State<NavBarPage>  {
   }
   @override
   void dispose() {
-    // WidgetsBinding.instance.removeObserver(this);
-    FirebaseAuth.instance.signOut();
     super.dispose();
   }
 
